@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day2</title>
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <script defer src="main.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+        .table-row {
+            border: 1px solid #dddddd;
+	        padding: 5px;
+            text-align: center;
+        }
+        .table {
+	    width: 50%;
+	    margin-bottom: 20px;
+	    border: 1px solid #dddddd;
+	    border-collapse: collapse;
+        }
+        .th {
+            font-weight: bold;
+	    padding: 5px;
+	    background: #efefef;
+	    border: 1px solid #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="search" placeholder="search">
+        <div class="addButtonBlock">
+            <input id="inputId" type="text" placeholder="students.length+1" disabled>
+            <input type="text" placeholder="ПІБ" v-model="student.name">
+            <input type="text" placeholder="Група" v-model="student.group">
+            <input type="text" placeholder="mark" v-model="student.mark">
+            <input type="text" placeholder="photoLink" v-model="student.photo">
+
+            <button @click="addStudent()">
+                Додати
+            </button>
+        </div>
+        <table class="table">
+            <tr>
+                <th class="th" v-for="c in columns">
+                    {{ c }}
+                </th>
+            </tr>
+            <tr v-for="s in students" v-bind:class="search!==''&&s.name.toLowerCase().includes(search.toLowerCase()) ? 'red' : 'black'">
+                <td class="table-row">
+                    {{ s.name}}
+                </td>
+                <td class="table-row">
+                    {{ s.group }}
+                </td>
+                <td class="table-row">
+                    <img :src="s.photo" />
+                </td>
+                <td class="table-row">
+                    {{ s.mark }}
+                </td>
+                <td class="table-row">
+                    <button @click="deleteStudent(s.id)">Видалити</button>
+                </td>
+            </tr>
+        </table>
+        <h3 v-for="s in students">
+            {{ s }}
+        </h3>
+        <div id="colorfullBlock" v-bind:style="{width: '100px',height: '100px', backgroundColor: 'red'}" onmouseover="document.getElementById('colorfullBlock').style.backgroundColor = 'black'" onmouseout="document.getElementById('colorfullBlock').style.backgroundColor = 'red'"></div>
+    </div>
+</body>
+</html>
